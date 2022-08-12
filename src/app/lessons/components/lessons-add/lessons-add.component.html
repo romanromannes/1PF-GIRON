@@ -1,0 +1,39 @@
+<h1 class="p-0 m-0 mb-1">Add Lesson</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <mat-card>
+      <form [formGroup]="form" (ngSubmit)="submit(form)">
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Students</mat-label>
+          <mat-select [(value)]="studentIdSelected" formControlName="studentId">
+            <mat-option *ngFor="let student of students" [value]="student.id">
+              {{ student.firstName }} {{ student.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Lessons</mat-label>
+          <mat-select [(value)]="courseIdSelected" formControlName="courseId">
+            <mat-option *ngFor="let course of courses" [value]="course.id">
+              {{ course.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="flex-center">
+          <button mat-flat-button [routerLink]="'/lessons'" class="me-1">
+            Go back
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="d-flex flex-column d-flex-center p-4">
+  <button
+    mat-stroked-button
+    
+    color="primary"
+    routerLink="/home"
+    routerLinkActive="mat-accent"
+  >
+    Home
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    routerLink="/students"
+    routerLinkActive="mat-accent"
+    class="mt-1"
+  >
+    Students
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    [routerLink]="'/courses'"
+    routerLinkActive="mat-accent"
+    class="mt-1"
+  >
+    Courses
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    routerLink="/lessons"
+    routerLinkActive="mat-accent"
+    class="mt-1"
+  >
+    Lessons
+  </button>
+</div>

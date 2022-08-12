@@ -1,0 +1,45 @@
+<div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Students">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row">{{row.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+      <td mat-cell *matCellDef="let row">{{row.firstName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+      <td mat-cell *matCellDef="let row">{{row.lastName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let row">{{row.email}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" style="text-align: end;">
+        <button mat-raised-button color="accent" [routerLink]="['/students/edit/', row.id]" class="me-2">Edit</button>
+        <button mat-raised-button color="warn" (click)="delete(row.id)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- <mat-paginator #paginator
+      [length]="dataSource.data.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page">
+  </mat-paginator> -->
+</div>
+
+<h3 *ngIf="dataSource.data.length == 0">Sorry, no students to show...</h3>
