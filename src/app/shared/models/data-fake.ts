@@ -1,6 +1,7 @@
 import { Course } from './course';
 import { Lesson } from './lesson';
 import { Student } from './student';
+import { UserAuth } from './user-auth';
 
 export const students: Student[] = [
   {
@@ -67,3 +68,8 @@ export const lessons: Lesson[] = [
 export function getfakeId() {
   return Math.ceil(Math.random() * 1000000000).toString();
 }
+
+export const userAuth: UserAuth[] = [
+  { userName: 'admin', pass: 'admin', profile: 'admin', islogin: false },
+  { userName: 'user', pass: 'user', profile: 'user', islogin: false },
+];

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    AuthModule,
     ReactiveFormsModule
   ],
   providers: [],

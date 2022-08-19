@@ -14,5 +14,12 @@
     <button mat-button routerLink="/lessons" routerLinkActive="mat-accent">
       Lessons
     </button>
+    <span class="example-spacer"></span>
+    <ng-container *ngIf="userAuth$ | async as userAuth">
+      <span>{{ userAuth.userName }}</span>
+    </ng-container>
+    <button mat-icon-button (click)="logout()" routerLinkActive="mat-accent">
+      <mat-icon>logout</mat-icon>
+    </button>
   </mat-toolbar>
 </p>
