@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../models/appState';
 import { Course } from '../models/course';
-import { courses, lessons, students } from '../models/data-fake';
-import { Lesson } from '../models/lesson';
+import { courses, inscriptions, students } from '../models/data-fake';
+import { Inscription } from '../models/inscription';
 import { Student } from '../models/student';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class MainService {
   private appState$ = new BehaviorSubject<AppState>({
     students: students,
     courses: courses,
-    lessons: lessons,
+    inscriptions: inscriptions,
   });
   constructor() {}
 
@@ -27,7 +27,7 @@ export class MainService {
     this.appState$.next({
       students: students,
       courses: state.courses,
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
@@ -37,7 +37,7 @@ export class MainService {
     this.appState$.next({
       students: students,
       courses: state.courses,
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
@@ -51,7 +51,7 @@ export class MainService {
     this.appState$.next({
       students: [student, ...students],
       courses: state.courses,
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
@@ -61,7 +61,7 @@ export class MainService {
     this.appState$.next({
       students: state.students,
       courses: courses,
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
@@ -71,7 +71,7 @@ export class MainService {
     this.appState$.next({
       students: state.students,
       courses: courses,
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
@@ -85,34 +85,34 @@ export class MainService {
     this.appState$.next({
       students: state.students,
       courses: [course, ...courses],
-      lessons: state.lessons,
+      inscriptions: state.inscriptions,
     });
   }
 
-  deleteLesson(id: string): void {
+  deleteInscription(id: string): void {
     let state = this.appState$.getValue();
-    let lessons = state.lessons.filter((x) => x.id !== id);
+    let inscriptions = state.inscriptions.filter((x) => x.id !== id);
     this.appState$.next({
       students: state.students,
       courses: state.courses,
-      lessons: lessons,
+      inscriptions: inscriptions,
     });
   }
 
-  addLesson(lesson: Lesson): void {
+  addInscription(inscription: Inscription): void {
     let state = this.appState$.getValue();
-    let lessons = [
-      ...state.lessons,
+    let inscriptions = [
+      ...state.inscriptions,
       {
-        id: lesson.id,
-        courseId: lesson.courseId,
-        studentId: lesson.studentId,
+        id: inscription.id,
+        courseId: inscription.courseId,
+        studentId: inscription.studentId,
       },
     ];
     this.appState$.next({
       students: state.students,
       courses: state.courses,
-      lessons: lessons,
+      inscriptions: inscriptions,
     });
   }
 }

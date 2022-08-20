@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Course } from 'src/app/shared/models/course';
 import { getfakeId } from 'src/app/shared/models/data-fake';
-import { Lesson } from 'src/app/shared/models/lesson';
+import { Inscription } from 'src/app/shared/models/inscription';
 import { Student } from 'src/app/shared/models/student';
 import { MainService } from 'src/app/shared/services/main.service';
 
 @Component({
-  selector: 'app-lessons-add',
-  templateUrl: './lessons-add.component.html',
-  styleUrls: ['./lessons-add.component.scss'],
+  selector: 'app-inscriptions-add',
+  templateUrl: './inscriptions-add.component.html',
+  styleUrls: ['./inscriptions-add.component.scss'],
 })
-export class LessonsAddComponent {
+export class InscriptionsAddComponent {
   form: FormGroup;
   courses: Course[] = [];
   students: Student[] = [];
@@ -35,16 +35,16 @@ export class LessonsAddComponent {
   }
 
   submit(form: FormGroup): void {
-    let lesson: Lesson = {
+    let inscription: Inscription = {
       id: getfakeId(),
       courseId: form.value.courseId,
       studentId: form.value.studentId,
     };
 
-    this.mainService.addLesson(lesson);
+    this.mainService.addInscription(inscription);
 
     this.form.reset;
 
-    this.router.navigate(['/lessons']);
+    this.router.navigate(['/inscriptions']);
   }
 }

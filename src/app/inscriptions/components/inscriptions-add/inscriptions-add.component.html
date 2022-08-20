@@ -1,4 +1,4 @@
-<h1 class="p-0 m-0 mb-1">Add Lesson</h1>
+<h1 class="p-0 m-0 mb-1">Add Inscription</h1>
 
 <div class="row">
   <div class="col-md-6">
@@ -13,7 +13,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill" style="width: 100%">
-          <mat-label>Lessons</mat-label>
+          <mat-label>Courses</mat-label>
           <mat-select [(value)]="courseIdSelected" formControlName="courseId">
             <mat-option *ngFor="let course of courses" [value]="course.id">
               {{ course.name }}
@@ -21,7 +21,7 @@
           </mat-select>
         </mat-form-field>
         <div class="flex-center">
-          <button mat-flat-button [routerLink]="'/lessons'" class="me-1">
+          <button mat-flat-button [routerLink]="'/inscriptions'" class="me-1">
             Go back
           </button>
           <button

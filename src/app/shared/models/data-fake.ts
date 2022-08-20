@@ -1,5 +1,5 @@
 import { Course } from './course';
-import { Lesson } from './lesson';
+import { Inscription } from './inscription';
 import { Student } from './student';
 import { UserAuth } from './user-auth';
 
@@ -42,7 +42,7 @@ export const courses: Course[] = [
   },
 ];
 
-export const lessons: Lesson[] = [
+export const inscriptions: Inscription[] = [
   {
     id: getfakeId(),
     studentId: '1',

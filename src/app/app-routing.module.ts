@@ -23,10 +23,10 @@ const routes: Routes = [
       import('./courses/courses.module').then((m) => m.CoursesModule),
   },
   {
-    path: 'lessons',
+    path: 'inscriptions',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./lessons/lessons.module').then((m) => m.LessonsModule),
+      import('./inscriptions/inscriptions.module').then((m) => m.InscriptionsModule),
   },
 ];
 
