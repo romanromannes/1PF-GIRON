@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { InscriptionVM } from 'src/app/shared/models/inscription';
-import { MainService } from 'src/app/shared/services/main.service';
+import { InscriptionVM } from 'src/app/core/models/inscription';
+import { MainService } from 'src/app/core/services/main.service';
+import { StudentsService } from 'src/app/core/services/students.service';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -13,7 +14,7 @@ export class InscriptionsTableComponent {
   data: InscriptionVM[] = [];
   dataSource = new MatTableDataSource(this.data);
 
-  constructor(private mainService: MainService) {
+  constructor(private mainService: MainService, private studentsService: StudentsService) {
     this.mainService.getAppState().subscribe((x) => {
       let inscriptionsVM: InscriptionVM[] = x.inscriptions.map((l) => {
         const students = x.students.filter((z) => z.id == l.studentId);

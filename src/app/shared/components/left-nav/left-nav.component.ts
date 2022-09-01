@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-left-nav',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftNavComponent implements OnInit {
 
-  constructor() { }
+  users$;
+  constructor(private usersService: UsersService) {
+    this.users$ = this.usersService.getSessiontUser();
+  }
 
   ngOnInit(): void {
   }

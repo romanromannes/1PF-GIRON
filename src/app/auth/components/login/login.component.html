@@ -1,19 +1,19 @@
-<div class="flex-center" style="height: 80vh; width: 100%;">
-  <form [formGroup]="form" (ngSubmit)="submit(form)">
+<div class="flex-center flex-column" style="height: 80vh; width: 100%;">
+  <form [formGroup]="form" (ngSubmit)="submit(form)" autocomplete="off">
   <mat-card style="width: 400px">
-    <mat-card-title>Login</mat-card-title>
+    <mat-card-title style="text-align: center;">Login</mat-card-title>
     <br>
       <mat-card-content>
         <mat-form-field appearance="fill" style="width: 100%">
           <mat-label>Enter user name</mat-label>
-          <input matInput [formControlName]="'userName'" required />
+          <input matInput [formControlName]="'userName'" required autocomplete="off"/>
           <mat-error *ngIf="form.value.userName.invalid">{{
             getErrorMessage()
           }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill" style="width: 100%">
           <mat-label>Enter password</mat-label>
-          <input type="password" matInput [formControlName]="'pass'" required />
+          <input type="password" matInput [formControlName]="'pass'" required autocomplete="off"/>
           <mat-error *ngIf="form.value.pass.invalid">{{
             getErrorMessage()
           }}</mat-error>
@@ -25,10 +25,13 @@
           color="primary"
           type="submit"
           [disabled]="form.invalid"
+          style="width: 100%"
         >
           Submit
         </button>
       </mat-card-actions>
     </mat-card>
   </form>
+  
+  <p class="mt-2">Not have an account? <button mat-button color="primary" routerLink="/auth/signup">Sing up</button></p>
 </div>

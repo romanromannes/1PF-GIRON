@@ -4,27 +4,26 @@ import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
+  declarations: [LoginComponent, SignupComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    MaterialModule
-  ], exports: [
-    LoginComponent
-  ]
+    MaterialModule,
+  ],
+  exports: [],
 })
-export class AuthModule { }
+export class AuthModule {}

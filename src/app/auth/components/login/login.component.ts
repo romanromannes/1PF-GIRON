@@ -1,21 +1,29 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { UserAuth } from 'src/app/shared/models/user-auth';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { Login } from 'src/app/core/models/auth';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent  {
-
+export class LoginComponent {
   form: FormGroup;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
-    private authService: AuthService,
+    private usersService: UsersService,
     private router: Router,
-    fb: FormBuilder
+    fb: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.form = fb.group({
       userName: ['', Validators.compose([Validators.required])],
@@ -34,23 +42,28 @@ export class LoginComponent  {
   }
 
   submit(form: FormGroup): void {
-    const user: UserAuth = {
+    const data: Login = {
       userName: form.value.userName,
       pass: form.value.pass,
-      profile: 'admin',
-      islogin: true,
     };
 
-    const login = this.authService.login(user);
+    const login = this.usersService.login(data);
 
-    this.form.reset;
+    this.form.reset();
 
-    if(login) {
+    if (login === true) {
       this.router.navigate(['/home']);
       return;
     }
 
-    this.router.navigate(['/auth/login']);
+    this.openSnackBar('Error', 'Incorrect credentials');
   }
 
+  openSnackBar(msg: string, action: string) {
+    this._snackBar.open(msg, action, {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: 5 * 1000,
+    });
+  }
 }

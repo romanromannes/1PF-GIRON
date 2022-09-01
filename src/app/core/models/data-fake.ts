@@ -1,7 +1,7 @@
 import { Course } from './course';
 import { Inscription } from './inscription';
 import { Student } from './student';
-import { UserAuth } from './user-auth';
+import { User } from './auth';
 
 export const students: Student[] = [
   {
@@ -44,32 +44,43 @@ export const courses: Course[] = [
 
 export const inscriptions: Inscription[] = [
   {
-    id: getfakeId(),
+    id: getFakeId(),
     studentId: '1',
     courseId: '1',
   },
   {
-    id: getfakeId(),
+    id: getFakeId(),
     studentId: '1',
     courseId: '2',
   },
   {
-    id: getfakeId(),
+    id: getFakeId(),
     studentId: '2',
     courseId: '2',
   },
   {
-    id: getfakeId(),
+    id: getFakeId(),
     studentId: '3',
     courseId: '3',
   },
 ];
 
-export function getfakeId() {
+export const users: User[] = [
+  {
+    id: getFakeId(),
+    userName: 'admin',
+    pass: 'admin',
+    profile: 'admin',
+    islogin: false,
+  },
+  {
+    id: getFakeId(),
+    userName: 'user',
+    pass: 'user',
+    profile: 'user',
+    islogin: false,
+  },
+];
+export function getFakeId() {
   return Math.ceil(Math.random() * 1000000000).toString();
 }
-
-export const userAuth: UserAuth[] = [
-  { userName: 'admin', pass: 'admin', profile: 'admin', islogin: false },
-  { userName: 'user', pass: 'user', profile: 'user', islogin: false },
-];

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './shared/services/auth.service';
+import { UsersService } from './core/services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +7,8 @@ import { AuthService } from './shared/services/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  userAuth$;
-  constructor(private authService: AuthService) {
-    this.userAuth$ = authService.getUserAuth();
+  sessionUser$;
+  constructor(private usersService: UsersService) {
+    this.sessionUser$ = usersService.getSessiontUser();
   }
 }

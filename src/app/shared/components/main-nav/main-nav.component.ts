@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.scss']
+  styleUrls: ['./main-nav.component.scss'],
 })
 export class MainNavComponent {
-
-  userAuth$;
-  constructor(private authService:AuthService) { 
-    this.userAuth$ = this.authService.getUserAuth();
+  sessionUser$;
+  constructor(private usersService: UsersService, private router: Router) {
+    this.sessionUser$ = this.usersService.getSessiontUser();
   }
 
   logout() {
-    this.authService.logout();
+    this.usersService.logout();
+    this.router.navigate(['/auth/login']);
   }
 }

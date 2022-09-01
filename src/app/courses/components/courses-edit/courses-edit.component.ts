@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Course } from 'src/app/shared/models/course';
-import { MainService } from 'src/app/shared/services/main.service';
+import { Course } from 'src/app/core/models/course';
+import { MainService } from 'src/app/core/services/main.service';
 
 @Component({
   selector: 'app-courses-edit',

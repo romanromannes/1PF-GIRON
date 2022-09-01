@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Course } from 'src/app/shared/models/course';
-import { getfakeId } from 'src/app/shared/models/data-fake';
-import { Inscription } from 'src/app/shared/models/inscription';
-import { Student } from 'src/app/shared/models/student';
-import { MainService } from 'src/app/shared/services/main.service';
+import { Course } from 'src/app/core/models/course';
+import { getFakeId } from 'src/app/core/models/data-fake';
+import { Inscription } from 'src/app/core/models/inscription';
+import { Student } from 'src/app/core/models/student';
+import { MainService } from 'src/app/core/services/main.service';
+import { StudentsService } from 'src/app/core/services/students.service';
 
 @Component({
   selector: 'app-inscriptions-add',
@@ -20,12 +21,16 @@ export class InscriptionsAddComponent {
   studentIdSelected: string = '';
   constructor(
     private mainService: MainService,
+    private studentsService: StudentsService,
     private router: Router,
     fb: FormBuilder
   ) {
     this.mainService.getAppState().subscribe((x) => {
       this.courses = x.courses;
-      this.students = x.students;
+    });
+
+    this.studentsService.getStudents().subscribe((students) => {
+      this.students = students;
     });
 
     this.form = fb.group({
@@ -36,7 +41,7 @@ export class InscriptionsAddComponent {
 
   submit(form: FormGroup): void {
     let inscription: Inscription = {
-      id: getfakeId(),
+      id: getFakeId(),
       courseId: form.value.courseId,
       studentId: form.value.studentId,
     };

@@ -1,0 +1,51 @@
+<mat-toolbar class="mb-2">
+    <span>Edit User</span>
+  </mat-toolbar>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <mat-card>
+        <form [formGroup]="form" (ngSubmit)="submit(form)">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Id</mat-label>
+            <input matInput [formControlName]="'id'" [disabled]="true" />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Enter user name</mat-label>
+            <input matInput [formControlName]="'userName'" required />
+            <mat-error *ngIf="form.value.userName.invalid">{{
+              getErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Enter pass</mat-label>
+            <input matInput [formControlName]="'pass'" required />
+            <mat-error *ngIf="form.value.pass.invalid">{{
+              getErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Enter profile</mat-label>
+            <input matInput [formControlName]="'profile'" required />
+            <mat-error *ngIf="form.value.profile.invalid">{{
+              getErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+          <div class="flex-center">
+            <button mat-flat-button [routerLink]="'/users'" class="me-1">
+              Go back
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="form.invalid"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  

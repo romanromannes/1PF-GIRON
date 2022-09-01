@@ -1,38 +1,49 @@
-<div class="d-flex flex-column d-flex-center p-4">
-  <button
-    mat-stroked-button
-    
-    color="primary"
-    routerLink="/home"
-    routerLinkActive="mat-accent"
-  >
-    Home
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    routerLink="/students"
-    routerLinkActive="mat-accent"
-    class="mt-1"
-  >
-    Students
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [routerLink]="'/courses'"
-    routerLinkActive="mat-accent"
-    class="mt-1"
-  >
-    Courses
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    routerLink="/inscriptions"
-    routerLinkActive="mat-accent"
-    class="mt-1"
-  >
-    Inscriptions
-  </button>
-</div>
+<ng-container *ngIf="users$ | async as userAuth">
+  <div class="d-flex flex-column d-flex-center p-4">
+    <button
+      mat-stroked-button
+      color="primary"
+      routerLink="/home"
+      routerLinkActive="mat-accent"
+    >
+      Home
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      routerLink="/students"
+      routerLinkActive="mat-accent"
+      class="mt-1"
+    >
+      Students
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      [routerLink]="'/courses'"
+      routerLinkActive="mat-accent"
+      class="mt-1"
+    >
+      Courses
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      routerLink="/inscriptions"
+      routerLinkActive="mat-accent"
+      class="mt-1"
+    >
+      Inscriptions
+    </button>
+    <button
+      *ngIf="userAuth.profile.toUpperCase() === 'ADMIN'"
+      mat-stroked-button
+      color="primary"
+      routerLink="/users"
+      routerLinkActive="mat-accent"
+      class="mt-1"
+    >
+      Users
+    </button>
+  </div>
+</ng-container>

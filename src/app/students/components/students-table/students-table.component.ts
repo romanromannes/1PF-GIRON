@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
 
-import { Student } from 'src/app/shared/models/student';
-import { MainService } from 'src/app/shared/services/main.service';
+import { Student } from 'src/app/core/models/student';
+import { StudentsService } from 'src/app/core/services/students.service';
 
 @Component({
   selector: 'app-students-table',
@@ -17,14 +14,13 @@ export class StudentsTableComponent {
   data: Student[] = [];
   dataSource = new MatTableDataSource(this.data);
 
-  constructor(private mainService: MainService) {
-    this.mainService.getAppState().subscribe((x) => {
-      this.dataSource = new MatTableDataSource(x.students);
-      return x.students;
+  constructor(private studentsService: StudentsService) {
+    this.studentsService.getStudents().subscribe((students) => {
+      this.dataSource = new MatTableDataSource(students);
     });
   }
 
   delete(id: string): void {
-    this.mainService.deleteStudent(id);
+    this.studentsService.deleteStudent(id);
   }
 }

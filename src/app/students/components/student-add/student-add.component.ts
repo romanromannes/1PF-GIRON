@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { getfakeId } from 'src/app/shared/models/data-fake';
-import { Student } from 'src/app/shared/models/student';
-import { MainService } from 'src/app/shared/services/main.service';
+import { getFakeId } from 'src/app/core/models/data-fake';
+import { Student } from 'src/app/core/models/student';
+import { StudentsService } from 'src/app/core/services/students.service';
 
 @Component({
   selector: 'app-student-add',
@@ -13,7 +13,7 @@ import { MainService } from 'src/app/shared/services/main.service';
 export class StudentAddComponent {
   form: FormGroup;
   constructor(
-    private mainService: MainService,
+    private studentsService: StudentsService,
     private router: Router,
     fb: FormBuilder
   ) {
@@ -40,15 +40,15 @@ export class StudentAddComponent {
 
   submit(form: FormGroup): void {
     let student: Student = {
-      id: getfakeId(),
+      id: getFakeId(),
       firstName: form.value.firstName,
       lastName: form.value.lastName,
       email: form.value.email,
     };
 
-    this.mainService.addStudent(student);
+    this.studentsService.addStudent(student);
 
-    this.form.reset;
+    this.form.reset();
 
     this.router.navigate(['/students']);
   }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Student } from 'src/app/shared/models/student';
-import { MainService } from 'src/app/shared/services/main.service';
+import { Student } from 'src/app/core/models/student';
+import { StudentsService } from 'src/app/core/services/students.service';
 
 @Component({
   selector: 'app-student-edit',
@@ -14,13 +14,13 @@ export class StudentEditComponent {
   paramId: string = '';
 
   constructor(
-    private mainService: MainService,
+    private studentsService: StudentsService,
     private router: Router,
     private route: ActivatedRoute,
     fb: FormBuilder
   ) {
     this.getParamId();
-    const student: Student = mainService.getStudentById(this.paramId);
+    const student: Student = studentsService.getStudentById(this.paramId);
     this.form = fb.group({
       id: [student.id],
       firstName: [student.firstName, Validators.compose([Validators.required])],
@@ -60,9 +60,9 @@ export class StudentEditComponent {
       email: form.value.email,
     };
 
-    this.mainService.editStudent(student);
+    this.studentsService.editStudent(student);
 
-    this.form.reset;
+    this.form.reset();
 
     this.router.navigate(['/students']);
   }

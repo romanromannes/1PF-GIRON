@@ -1,4 +1,4 @@
-<p>
+<ng-container *ngIf="sessionUser$ | async as userAuth">
   <mat-toolbar color="primary">
     <span>Coder University</span>
     <span class="example-spacer"></span>
@@ -14,12 +14,13 @@
     <button mat-button routerLink="/inscriptions" routerLinkActive="mat-accent">
       Inscriptions
     </button>
+    <button mat-button routerLink="/users" *ngIf="userAuth.profile.toUpperCase() === 'ADMIN'" routerLinkActive="mat-accent">
+      Users
+    </button>
     <span class="example-spacer"></span>
-    <ng-container *ngIf="userAuth$ | async as userAuth">
-      <span>{{ userAuth.userName }}</span>
-    </ng-container>
+    <span style="font-size: 14px">{{ userAuth.userName }}</span>
     <button mat-icon-button (click)="logout()" routerLinkActive="mat-accent">
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>
-</p>
+</ng-container>

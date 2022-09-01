@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../models/appState';
 import { Course } from '../models/course';
-import { courses, inscriptions, students } from '../models/data-fake';
+import { courses } from '../models/data-fake';
 import { Inscription } from '../models/inscription';
 import { Student } from '../models/student';
 
@@ -11,9 +11,9 @@ import { Student } from '../models/student';
 })
 export class MainService {
   private appState$ = new BehaviorSubject<AppState>({
-    students: students,
+    students: [],
     courses: courses,
-    inscriptions: inscriptions,
+    inscriptions: [],
   });
   constructor() {}
 
