@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   ): Observable<boolean> {
     return this.usersService.getSessiontUser().pipe(
       map((sessionUser: User) => {
-        console.log('auth canActivate', sessionUser);
+        //console.log('auth canActivate', sessionUser);
         if (!sessionUser.islogin) {
           this.router.navigate(['/auth/login']);
           return false;
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return this.usersService.getSessiontUser().pipe(
       map((sessionUser: User) => {
-        console.log('auth canLoad', sessionUser);
+        //console.log('auth canLoad', sessionUser);
         if (!sessionUser.islogin) {
           this.router.navigate(['/auth/login']);
           return false;

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Course } from 'src/app/core/models/course';
-import { getFakeId } from 'src/app/core/models/data-fake';
-import { MainService } from 'src/app/core/services/main.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { getFakeId } from 'src/app/core/utilities/utilities';
 
 @Component({
   selector: 'app-courses-add',
@@ -13,7 +13,7 @@ import { MainService } from 'src/app/core/services/main.service';
 export class CoursesAddComponent  {
   form: FormGroup;
   constructor(
-    private mainService: MainService,
+    private coursesService: CoursesService,
     private router: Router,
     fb: FormBuilder
   ) {
@@ -35,7 +35,7 @@ export class CoursesAddComponent  {
       name: form.value.name,
     };
 
-    this.mainService.addCourse(course);
+    this.coursesService.addCourse(course);
 
     this.form.reset;
 

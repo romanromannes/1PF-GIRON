@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login, User } from '../models/auth';
-import { getFakeId } from '../models/data-fake';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +30,7 @@ export class UsersService {
           islogin: false,
         };
       });
-      
+
       usersFromDb = [
         {
           id: '000',
@@ -58,23 +57,24 @@ export class UsersService {
     return this.sessionUser$.asObservable();
   }
 
-  signin(data: Login): boolean {
+  signin(data: Login): void {
     const user: User = {
-      id: getFakeId(),
+      id: '',
       userName: data.userName,
       pass: data.pass,
       profile: 'user',
       islogin: false,
     };
 
-    this.users$.next([...this.users$.getValue(), user]);
-    return true;
+    this.http.post<User>(`${this.url}/users`, user).subscribe((x) => {
+      this.users$.next([...this.users$.getValue(), x]);
+    });
   }
 
   login(login: Login): boolean {
-    const userFromDb = this.users$.getValue().find(
-      (x) => x.userName.trim() === login.userName.trim()
-    );
+    const userFromDb = this.users$
+      .getValue()
+      .find((x) => x.userName.trim() === login.userName.trim());
 
     if (userFromDb == null || userFromDb.pass !== login.pass) {
       return false;
@@ -108,14 +108,30 @@ export class UsersService {
   }
 
   deleteUser(id: string): void {
-    const users = this.users$.getValue().filter((x) => x.id !== id);
-    this.users$.next(users);
+    this.http.delete<User>(`${this.url}/users/${id}`).subscribe(
+      (user) => {
+        this.users$.next(this.users$.getValue().filter((x) => x.id !== id));
+      },
+      (err) => throwError(() => new Error(err))
+    );
   }
 
   addUser(user: User): void {
-    const users = this.users$.getValue();
-    const data = [...users, user];
-    this.users$.next(data);
+    this.http
+      .post<User>(`${this.url}/users`, user)
+      .pipe(
+        catchError((err) => {
+          throw err;
+        })
+      )
+      .subscribe({
+        next: (user) => {
+          this.users$.next([...this.users$.getValue(), user]);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   getUserById(id: string): User {
@@ -123,7 +139,11 @@ export class UsersService {
   }
 
   editUser(user: User): void {
-    const users = this.users$.getValue().filter((x) => x.id !== user.id);
-    this.users$.next([user, ...users]);
+    this.http.put<User>(`${this.url}/users/${user.id}`, user).subscribe((x) => {
+      this.users$.next([
+        x,
+        ...this.users$.getValue().filter((x) => x.id !== user.id),
+      ]);
+    });
   }
 }

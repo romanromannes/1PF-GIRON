@@ -10,7 +10,7 @@ import { Student } from '../models/student';
 export class StudentsService {
   private url: string = environment.url;
   private students$ = new BehaviorSubject<Student[]>([]);
-  
+
   constructor(private http: HttpClient) {
     let studentsFromDb: Student[];
     this.http.get<Student[]>(`${this.url}/students`).subscribe((students) => {
@@ -23,7 +23,6 @@ export class StudentsService {
           pic: student.pic,
         };
       });
-      
       this.students$.next(studentsFromDb);
     });
   }
@@ -33,12 +32,21 @@ export class StudentsService {
   }
 
   deleteStudent(id: string): void {
-    const students = this.students$.getValue().filter((x) => x.id !== id);
-    this.students$.next(students);
+    this.http.delete<Student>(`${this.url}/students/${id}`).subscribe({
+      next: (st) => {
+        this.students$.next(
+          this.students$.getValue().filter((x) => x.id !== id)
+        );
+      },
+    });
   }
 
   addStudent(student: Student): void {
-    this.students$.next([...this.students$.getValue(), student]);
+    this.http.post<Student>(`${this.url}/students/`, student).subscribe({
+      next: (st) => {
+        this.students$.next([...this.students$.getValue(), st]);
+      },
+    });
   }
 
   getStudentById(id: string): Student {
@@ -46,9 +54,15 @@ export class StudentsService {
   }
 
   editStudent(student: Student): void {
-    this.students$.next([
-      student,
-      ...this.students$.getValue().filter((x) => x.id !== student.id),
-    ]);
+    this.http
+      .put<Student>(`${this.url}/students/${student.id}`, student)
+      .subscribe({
+        next: (st) => {
+          this.students$.next([
+            st,
+            ...this.students$.getValue().filter((x) => x.id !== st.id),
+          ]);
+        },
+      });
   }
 }

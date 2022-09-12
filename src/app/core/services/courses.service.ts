@@ -25,27 +25,32 @@ export class CoursesService {
     });
   }
 
-  getStudents(): Observable<Course[]> {
+  getCourses(): Observable<Course[]> {
     return this.courses$.asObservable();
   }
 
-  deleteStudent(id: string): void {
-    const courses = this.courses$.getValue().filter((x) => x.id !== id);
-    this.courses$.next(courses);
+  deleteCourse(id: string): void {
+    this.http.delete<Course>(`${this.url}/courses/${id}`).subscribe((x) => {
+      this.courses$.next(this.courses$.getValue().filter((x) => x.id !== id));
+    })
   }
 
-  addStudent(course: Course): void {
-    this.courses$.next([...this.courses$.getValue(), course]);
+  addCourse(course: Course): void {
+    this.http.post<Course>(`${this.url}/courses`, course).subscribe((x) => {
+      this.courses$.next([...this.courses$.getValue(), x]);
+    })
   }
 
-  getStudentById(id: string): Course {
+  getCourseById(id: string): Course {
     return this.courses$.getValue().filter((x) => x.id === id)[0];
   }
 
-  editStudent(course: Course): void {
-    this.courses$.next([
-      course,
-      ...this.courses$.getValue().filter((x) => x.id !== course.id),
-    ]);
+  editCourse(course: Course): void {
+    this.http.put<Course>(`${this.url}/courses/${course.id}`, course).subscribe((x) => {
+      this.courses$.next([
+        x,
+        ...this.courses$.getValue().filter((x) => x.id !== course.id),
+      ]);
+    })
   }
 }

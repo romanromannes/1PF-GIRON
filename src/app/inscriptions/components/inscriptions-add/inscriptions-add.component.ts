@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Course } from 'src/app/core/models/course';
-import { getFakeId } from 'src/app/core/models/data-fake';
+import { getFakeId } from 'src/app/core/utilities/utilities';
 import { Inscription } from 'src/app/core/models/inscription';
-import { Student } from 'src/app/core/models/student';
-import { MainService } from 'src/app/core/services/main.service';
-import { StudentsService } from 'src/app/core/services/students.service';
+import { InscriptionsService } from 'src/app/core/services/inscriptions.service';
 
 @Component({
   selector: 'app-inscriptions-add',
@@ -15,38 +12,32 @@ import { StudentsService } from 'src/app/core/services/students.service';
 })
 export class InscriptionsAddComponent {
   form: FormGroup;
-  courses: Course[] = [];
-  students: Student[] = [];
-  courseIdSelected: string = '';
-  studentIdSelected: string = '';
+  inscriptions: Inscription[] = [];
+  courseSelected: string = '';
+  studentSelected: string = '';
+  students$;
+  courses$;
   constructor(
-    private mainService: MainService,
-    private studentsService: StudentsService,
+    private inscriptionsService: InscriptionsService,
     private router: Router,
     fb: FormBuilder
   ) {
-    this.mainService.getAppState().subscribe((x) => {
-      this.courses = x.courses;
-    });
-
-    this.studentsService.getStudents().subscribe((students) => {
-      this.students = students;
-    });
-
+    this.students$ = inscriptionsService.getStudents();
+    this.courses$ = inscriptionsService.getCourses();
     this.form = fb.group({
-      studentId: [this.studentIdSelected, Validators.compose([Validators.required])],
-      courseId: [this.courseIdSelected, Validators.compose([Validators.required])],
+      student: [this.studentSelected, Validators.compose([Validators.required])],
+      course: [this.courseSelected, Validators.compose([Validators.required])],
     });
   }
 
   submit(form: FormGroup): void {
     let inscription: Inscription = {
       id: getFakeId(),
-      courseId: form.value.courseId,
-      studentId: form.value.studentId,
+      course: form.value.course,
+      student: form.value.student,
     };
 
-    this.mainService.addInscription(inscription);
+    this.inscriptionsService.addInscription(inscription);
 
     this.form.reset;
 

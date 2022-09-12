@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/auth';
-import { getFakeId } from 'src/app/core/models/data-fake';
+import { getFakeId } from 'src/app/core/utilities/utilities';
 import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({

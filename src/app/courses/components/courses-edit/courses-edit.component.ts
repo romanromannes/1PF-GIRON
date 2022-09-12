@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Course } from 'src/app/core/models/course';
-import { MainService } from 'src/app/core/services/main.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
 
 @Component({
   selector: 'app-courses-edit',
@@ -14,13 +14,13 @@ export class CoursesEditComponent {
   paramId: string = '';
 
   constructor(
-    private mainService: MainService,
+    private coursesServices: CoursesService,
     private router: Router,
     private route: ActivatedRoute,
     fb: FormBuilder
   ) {
     this.getParamId();
-    const course: Course = mainService.getCoursesById(this.paramId);
+    const course: Course = coursesServices.getCourseById(this.paramId);
     this.form = fb.group({
       id: [course.id],
       name: [course.name, Validators.compose([Validators.required])],
@@ -46,7 +46,7 @@ export class CoursesEditComponent {
       name: form.value.name,
     };
 
-    this.mainService.editCourse(course);
+    this.coursesServices.editCourse(course);
 
     this.form.reset;
 

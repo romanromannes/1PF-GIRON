@@ -25,7 +25,7 @@ export class AdminGuard implements CanActivate, CanLoad {
   ): Observable<boolean> {
     return this.usersService.getSessiontUser().pipe(
       map((sessionUser: User) => {
-        console.log('admin canActivate', sessionUser);
+        //console.log('admin canActivate', sessionUser);
         if (sessionUser.profile.toUpperCase() !== 'ADMIN') {
           this.router.navigate(['/home']);
           return false;
@@ -38,7 +38,7 @@ export class AdminGuard implements CanActivate, CanLoad {
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return this.usersService.getSessiontUser().pipe(
       map((sessionUser: User) => {
-        console.log('admin canLoad', sessionUser);
+        //console.log('admin canLoad', sessionUser);
         if (sessionUser.profile.toUpperCase() !== 'ADMIN') {
           this.router.navigate(['/home']);
           return false;

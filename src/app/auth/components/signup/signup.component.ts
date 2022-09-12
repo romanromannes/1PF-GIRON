@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/core/services/users.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
   form: FormGroup;
@@ -42,7 +42,7 @@ export class SignupComponent {
     if (this.form.value.confirmPass.hasError('required')) {
       return 'You must enter a value';
     }
-   
+
     return 'error';
   }
 
@@ -52,15 +52,10 @@ export class SignupComponent {
       pass: form.value.pass,
     };
 
-    const signup = this.usersService.signin(data);
-
+    this.usersService.signin(data);
     this.form.reset();
-
-    if (signup === true) {
-      return;
-    }
-
-    this.openSnackBar('Error', 'Incorrect credentials');
+    this.router.navigate(['/auth/login']);
+    //this.openSnackBar('Error', 'Incorrect credentials');
   }
 
   openSnackBar(msg: string, action: string) {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { getFakeId } from 'src/app/core/models/data-fake';
+import { getFakeId } from 'src/app/core/utilities/utilities';
 import { Student } from 'src/app/core/models/student';
 import { StudentsService } from 'src/app/core/services/students.service';
 

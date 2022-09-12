@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { InscriptionVM } from 'src/app/core/models/inscription';
-import { MainService } from 'src/app/core/services/main.service';
-import { StudentsService } from 'src/app/core/services/students.service';
+import { Inscription } from 'src/app/core/models/inscription';
+import { InscriptionsService } from 'src/app/core/services/inscriptions.service';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -11,25 +10,16 @@ import { StudentsService } from 'src/app/core/services/students.service';
 })
 export class InscriptionsTableComponent {
   displayedColumns = ['id', 'course', 'student', 'options'];
-  data: InscriptionVM[] = [];
+  data: Inscription[] = [];
   dataSource = new MatTableDataSource(this.data);
 
-  constructor(private mainService: MainService, private studentsService: StudentsService) {
-    this.mainService.getAppState().subscribe((x) => {
-      let inscriptionsVM: InscriptionVM[] = x.inscriptions.map((l) => {
-        const students = x.students.filter((z) => z.id == l.studentId);
-        const courses = x.courses.filter((z) => z.id == l.courseId);
-        return {
-          id: l.id,
-          course: courses[0],
-          student: students[0],
-        };
-      });
-      this.dataSource = new MatTableDataSource(inscriptionsVM);
+  constructor(private inscriptionsService: InscriptionsService) {
+    this.inscriptionsService.getInscriptions().subscribe((inscriptions) => {
+      this.dataSource = new MatTableDataSource(inscriptions);
     });
   }
 
   delete(id: string): void {
-    this.mainService.deleteInscription(id);
+    this.inscriptionsService.deleteInscription(id);
   }
 }

@@ -6,21 +6,21 @@
         <mat-card-content>
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Enter user name</mat-label>
-            <input matInput [formControlName]="'userName'" required autocomplete="off"/>
+            <input matInput [formControlName]="'userName'" required/>
             <mat-error *ngIf="form.value.userName.invalid">{{
               getErrorMessage()
             }}</mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Enter password</mat-label>
-            <input type="password" matInput [formControlName]="'pass'" required autocomplete="off"/>
+            <input type="password" matInput [formControlName]="'pass'" required/>
             <mat-error *ngIf="form.value.pass.invalid">{{
               getErrorMessage()
             }}</mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Confirm password</mat-label>
-            <input type="password" matInput [formControlName]="'confirmPass'" required autocomplete="off"/>
+            <input type="password" matInput [formControlName]="'confirmPass'" required/>
             <mat-error *ngIf="form.value.confirmPass.invalid">{{
               getErrorMessage()
             }}</mat-error>
