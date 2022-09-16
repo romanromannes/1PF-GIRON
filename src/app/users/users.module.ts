@@ -9,6 +9,10 @@ import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersIndexComponent } from './components/users-index/users-index.component';
 import { UsersTableComponent } from './components/users-table/users-table.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromUsers from './state/users.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffects } from './state/users.effects';
 
 const routes: Routes = [
   {
@@ -33,6 +37,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature(fromUsers.usersFeatureKey, fromUsers.reducer),
+    EffectsModule.forFeature([UsersEffects]),
   ]
 })
 export class UsersModule { }
