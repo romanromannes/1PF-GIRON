@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { User } from 'src/app/core/models/auth';
-import { getFakeId } from 'src/app/core/utilities/utilities';
-import { UsersService } from 'src/app/core/services/users.service';
+import { Store } from '@ngrx/store';
+import { UsersState } from '../../state/users.state';
+import * as UsersActions from '../../state/users.actions';
+import { User } from 'src/app/core/models/user';
+import { Observable } from 'rxjs';
+import { selectUsersLoader } from '../../state/users.selectors';
 
 @Component({
   selector: 'app-user-add',
@@ -11,11 +13,10 @@ import { UsersService } from 'src/app/core/services/users.service';
   styleUrls: ['./user-add.component.scss']
 })
 export class UserAddComponent {
-
+  loader$: Observable<boolean>;
   form: FormGroup;
   constructor(
-    private usersService: UsersService,
-    private router: Router,
+    private store: Store<UsersState>,
     fb: FormBuilder
   ) {
     this.form = fb.group({
@@ -23,6 +24,7 @@ export class UserAddComponent {
       pass: ['', Validators.compose([Validators.required])],
       profile: ['', Validators.compose([Validators.required])],
     });
+    this.loader$ = this.store.select(selectUsersLoader);
   }
 
   getErrorMessage() {
@@ -41,17 +43,14 @@ export class UserAddComponent {
 
   submit(form: FormGroup): void {
     let user: User = {
-      id: getFakeId(),
+      id: '',
       userName: form.value.userName,
       pass: form.value.pass,
       profile: form.value.profile,
-      islogin: false
     };
 
-    this.usersService.addUser(user);
+    this.store.dispatch(UsersActions.addUser({user: user}));
 
     this.form.reset();
-
-    this.router.navigate(['/users']);
   }
 }

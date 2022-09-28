@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from 'src/app/core/services/users.service';
+import { Store } from '@ngrx/store';
+import { selectSessionUser } from 'src/app/auth/state/auth.selectors';
+import { AuthState } from 'src/app/auth/state/auth.state';
+import * as AuthActions from '../../../auth/state/auth.actions';
 
 @Component({
   selector: 'app-main-nav',
@@ -9,12 +12,13 @@ import { UsersService } from 'src/app/core/services/users.service';
 })
 export class MainNavComponent {
   sessionUser$;
-  constructor(private usersService: UsersService, private router: Router) {
-    this.sessionUser$ = this.usersService.getSessiontUser();
+  title: string = '<Coder University/>';
+  constructor(private store: Store<AuthState>, private router: Router) {
+    this.sessionUser$ = this.store.select(selectSessionUser);
   }
 
   logout() {
-    this.usersService.logout();
+    this.store.dispatch(AuthActions.logOut());
     this.router.navigate(['/auth/login']);
   }
 }

@@ -1,7 +1,7 @@
 import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as UsersActions from './users.actions';
-import { UsersState } from './usersState';
+import { UsersState } from './users.state';
 
 export const usersFeatureKey = 'users';
 
@@ -17,7 +17,7 @@ export const reducer = createReducer(
     return { ...state, load: true };
   }),
   on(UsersActions.loadUsersSuccess, (state, action) => {
-    return { ...state, load: false, users: action.data };
+    return { ...state, load: false, users: action.users };
   }),
   on(UsersActions.loadUsersFailure, (state, action) => {
     return { ...state, load: false, error: action.error };
@@ -26,7 +26,7 @@ export const reducer = createReducer(
     return { ...state, load: true };
   }),
   on(UsersActions.addUserSuccess, (state, action) => {
-    return { ...state, load: false, users: [...state.users, action.data] };
+    return { ...state, load: false, users: [...state.users, action.user] };
   }),
   on(UsersActions.addUserFailure, (state, action) => {
     return { ...state, load: false, error: action.error };
@@ -38,7 +38,7 @@ export const reducer = createReducer(
     return {
       ...state,
       load: false,
-      users: [...state.users.filter((x) => x.id !== action.data.id)],
+      users: [...state.users.filter((x) => x.id !== action.user.id)],
     };
   }),
   on(UsersActions.deleteUserFailure, (state, action) => {
@@ -52,8 +52,8 @@ export const reducer = createReducer(
       ...state,
       load: false,
       users: [
-        ...state.users.filter((x) => x.id !== action.data.id),
-        action.data,
+        ...state.users.filter((x) => x.id !== action.user.id),
+        action.user,
       ],
     };
   }),

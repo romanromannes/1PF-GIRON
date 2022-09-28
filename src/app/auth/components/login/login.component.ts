@@ -6,8 +6,10 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/core/models/auth';
-import { UsersService } from 'src/app/core/services/users.service';
+import { Store } from '@ngrx/store';
+import { LogIn } from 'src/app/core/models/auth';
+import { AuthState } from '../../state/auth.state';
+import * as AuthActions from '../../state/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
-    private usersService: UsersService,
+    private store: Store<AuthState>,
     private router: Router,
     fb: FormBuilder,
     private _snackBar: MatSnackBar
@@ -42,21 +44,15 @@ export class LoginComponent {
   }
 
   submit(form: FormGroup): void {
-    const data: Login = {
+    const data: LogIn = {
       userName: form.value.userName,
       pass: form.value.pass,
     };
 
-    const login = this.usersService.login(data);
+    const login = this.store.dispatch(AuthActions.logIn({logIn: data}));
+    //this.form.reset();
 
-    this.form.reset();
-
-    if (login === true) {
-      this.router.navigate(['/home']);
-      return;
-    }
-
-    this.openSnackBar('Error', 'Incorrect credentials');
+    //this.openSnackBar('Error', 'Incorrect credentials');
   }
 
   openSnackBar(msg: string, action: string) {

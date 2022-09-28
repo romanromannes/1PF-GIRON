@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/core/services/users.service';
+import { Store } from '@ngrx/store';
+import { selectSessionUser } from 'src/app/auth/state/auth.selectors';
+import { AuthState } from 'src/app/auth/state/auth.state';
+import * as AuthActions from '../../../auth/state/auth.actions';
 
 @Component({
   selector: 'app-left-nav',
@@ -8,9 +11,9 @@ import { UsersService } from 'src/app/core/services/users.service';
 })
 export class LeftNavComponent implements OnInit {
 
-  users$;
-  constructor(private usersService: UsersService) {
-    this.users$ = this.usersService.getSessiontUser();
+  sessionUser$;
+  constructor(private store: Store<AuthState>) {
+    this.sessionUser$ = this.store.select(selectSessionUser);
   }
 
   ngOnInit(): void {

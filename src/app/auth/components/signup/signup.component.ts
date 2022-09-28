@@ -6,7 +6,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/core/models/auth';
+import { LogIn } from 'src/app/core/models/auth';
 import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
@@ -47,12 +47,12 @@ export class SignupComponent {
   }
 
   submit(form: FormGroup): void {
-    const data: Login = {
+    const data: LogIn = {
       userName: form.value.userName,
       pass: form.value.pass,
     };
 
-    this.usersService.signin(data);
+    // this.usersService.signin(data);
     this.form.reset();
     this.router.navigate(['/auth/login']);
     //this.openSnackBar('Error', 'Incorrect credentials');

@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { UsersService } from './core/services/users.service';
+import { Store } from '@ngrx/store';
+import { selectSessionUser } from './auth/state/auth.selectors';
+import { AuthState } from './auth/state/auth.state';
+import * as AuthActions from './auth/state/auth.actions'
+import { SessionUser } from './core/models/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +12,9 @@ import { UsersService } from './core/services/users.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  sessionUser$;
-  constructor(private usersService: UsersService) {
-    this.sessionUser$ = usersService.getSessiontUser();
+  sessionUser$: Observable<SessionUser>;
+
+  constructor(private store: Store<AuthState>) {
+    this.sessionUser$ = store.select(selectSessionUser);
   }
 }

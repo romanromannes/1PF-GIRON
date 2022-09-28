@@ -1,7 +1,8 @@
 <mat-toolbar class="mb-2">
-    <span>Edit User</span>
-  </mat-toolbar>
-  
+  <span>Edit User</span>
+</mat-toolbar>
+
+<ng-container *ngIf="!(loader$ | async)">
   <div class="row">
     <div class="col-md-6">
       <mat-card>
@@ -48,4 +49,6 @@
       </mat-card>
     </div>
   </div>
-  
+</ng-container>
+
+<h3 *ngIf="loader$ | async">Loading...</h3>

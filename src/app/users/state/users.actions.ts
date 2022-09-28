@@ -1,13 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/core/models/auth';
+import { User } from 'src/app/core/models/user';
 
-export const loadUsers = createAction(
-  '[Users] Load Users'
-);
+export const loadUsers = createAction('[Users] Load Users');
 
 export const loadUsersSuccess = createAction(
   '[Users] Load Users Success',
-  props<{ data: User[] }>()
+  props<{ users: User[] }>()
 );
 
 export const loadUsersFailure = createAction(
@@ -16,12 +14,13 @@ export const loadUsersFailure = createAction(
 );
 
 export const addUser = createAction(
-  '[Users] Add User'
+  '[Users] Add User',
+  props<{ user: User }>()
 );
 
 export const addUserSuccess = createAction(
   '[Users] Add User Success',
-  props<{ data: User }>()
+  props<{ user: User }>()
 );
 
 export const addUserFailure = createAction(
@@ -30,12 +29,13 @@ export const addUserFailure = createAction(
 );
 
 export const deleteUser = createAction(
-  '[Users] Delete User'
+  '[Users] Delete User',
+  props<{ id: string }>()
 );
 
 export const deleteUserSuccess = createAction(
   '[Users] Delete User Success',
-  props<{ data: User }>()
+  props<{ user: User }>()
 );
 
 export const deleteUserFailure = createAction(
@@ -44,17 +44,16 @@ export const deleteUserFailure = createAction(
 );
 
 export const editUser = createAction(
-  '[Users] Edit User'
+  '[Users] Edit User',
+  props<{ user: User }>()
 );
 
 export const editUserSuccess = createAction(
   '[Users] Edit User Success',
-  props<{ data: User }>()
+  props<{ user: User }>()
 );
 
 export const editUserFailure = createAction(
   '[Users] Edit User Failure',
   props<{ error: string }>()
 );
-
-

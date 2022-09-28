@@ -1,12 +1,16 @@
-export interface User {
+export interface LogIn {
+    userName: string;
+    pass: string;
+}
+
+export interface SignUp {
+    userName: string;
+    pass: string;
+}
+
+export interface SessionUser {
     id: string;
     userName: string;
     pass: string;
-    profile: string; //admin | user
-    islogin: boolean; 
-}
-
-export interface Login {
-    userName: string;
-    pass: string;
-}
+    profile: string;
+  }

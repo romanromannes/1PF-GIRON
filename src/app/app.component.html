@@ -1,5 +1,5 @@
-<ng-container *ngIf="sessionUser$ | async as userAuth">
-  <ng-container *ngIf="userAuth.islogin">
+<ng-container *ngIf="sessionUser$ | async as sessionUser">
+  <ng-container *ngIf="sessionUser.userName !== '' ">
     <app-main-nav></app-main-nav>
     <div class="container-fluid">
       <div class="row">
@@ -13,8 +13,7 @@
     </div>
   </ng-container>
   
-  <ng-container *ngIf="!userAuth.islogin">
-    <!-- <app-auth-index></app-auth-index> -->
+  <ng-container *ngIf="sessionUser.userName === ''">
     <router-outlet></router-outlet>
   </ng-container>
 </ng-container>

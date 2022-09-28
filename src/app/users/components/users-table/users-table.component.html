@@ -1,4 +1,4 @@
-<ng-container *ngIf="!loading">
+<ng-container *ngIf="!(loader$ | async)">
   <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
     <table
       mat-table
@@ -62,4 +62,4 @@
   <h3 *ngIf="dataSource.data.length === 0">Sorry, no users to show...</h3>
 </ng-container>
 
-<h3 *ngIf="loading">Loading...</h3>
+<h3 *ngIf="loader$ | async">Loading...</h3>

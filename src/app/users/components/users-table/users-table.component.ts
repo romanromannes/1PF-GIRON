@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { delay } from 'rxjs';
-import { User } from 'src/app/core/models/auth';
-import { UsersService } from 'src/app/core/services/users.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { UsersState } from '../../state/users.state';
+import * as UsersActions from '../../state/users.actions';
+import { selectUsersErrorMsg, selectUsersList, selectUsersLoader } from '../../state/users.selectors';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-users-table',
@@ -13,20 +16,20 @@ export class UsersTableComponent {
   displayedColumns = ['id', 'userName', 'pass', 'profile', 'options'];
   data: User[] = [];
   dataSource = new MatTableDataSource(this.data);
-  loading: boolean;
+  loader$: Observable<boolean>;
+  errorMsg$: Observable<string>;
 
-  constructor(private usersService: UsersService) {
-    this.loading = true;
-    this.usersService
-      .getUsers()
-      .pipe(delay(3000))
+  constructor(private store:Store<UsersState>) {
+    this.store.dispatch(UsersActions.loadUsers())
+    this.loader$ = this.store.select(selectUsersLoader);
+    this.errorMsg$ = this.store.select(selectUsersErrorMsg);
+    this.store.select(selectUsersList)
       .subscribe((x) => {
         this.dataSource = new MatTableDataSource(x);
-        this.loading = false;
       });
   }
 
   delete(id: string): void {
-    this.usersService.deleteUser(id);
+    this.store.dispatch(UsersActions.deleteUser({id: id}));
   }
 }

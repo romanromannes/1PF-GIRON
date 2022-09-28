@@ -8,7 +8,7 @@ import { Student } from '../models/student';
   providedIn: 'root',
 })
 export class StudentsService {
-  private url: string = environment.url;
+  private url: string = environment.apiUrl;
   private students$ = new BehaviorSubject<Student[]>([]);
 
   constructor(private http: HttpClient) {

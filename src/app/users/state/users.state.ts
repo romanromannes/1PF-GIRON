@@ -1,4 +1,4 @@
-import { User } from "src/app/core/models/auth";
+import { User } from "src/app/core/models/user";
 
 export interface UsersState {
     load: boolean,

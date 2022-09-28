@@ -12,7 +12,7 @@ import { StudentsService } from './students.service';
   providedIn: 'root',
 })
 export class InscriptionsService {
-  private url: string = environment.url;
+  private url: string = environment.apiUrl;
   private inscriptions$ = new BehaviorSubject<Inscription[]>([]);
   constructor(
     private http: HttpClient,

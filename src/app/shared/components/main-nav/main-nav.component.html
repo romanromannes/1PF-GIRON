@@ -1,6 +1,6 @@
 <ng-container *ngIf="sessionUser$ | async as userAuth">
   <mat-toolbar color="primary">
-    <span>Coder University</span>
+    <span>{{ title }}</span>
     <span class="example-spacer"></span>
     <button mat-button routerLink="/home" routerLinkActive="mat-accent">
       Home
@@ -14,7 +14,12 @@
     <button mat-button routerLink="/inscriptions" routerLinkActive="mat-accent">
       Inscriptions
     </button>
-    <button mat-button routerLink="/users" *ngIf="userAuth.profile.toUpperCase() === 'ADMIN'" routerLinkActive="mat-accent">
+    <button
+      mat-button
+      routerLink="/users"
+      *ngIf="userAuth.profile.toUpperCase() === 'ADMIN'"
+      routerLinkActive="mat-accent"
+    >
       Users
     </button>
     <span class="example-spacer"></span>
